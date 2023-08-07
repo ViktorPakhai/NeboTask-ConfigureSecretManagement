@@ -1,6 +1,5 @@
 kubectl exec -it $(kubectl get pods | awk '/test-csi-setup/{print $1}' | head -1) -- cat /mnt/secrets-store/nebo/stage/db_creds; echo
 
-
 eksctl utils associate-iam-oidc-provider --region="us-east-1" --cluster="nebo-k8s" --approve # Only run this once
 
 eksctl create iamserviceaccount --name nginx-deployment-sa --region="us-east-1" --cluster "nebo-k8s" --attach-policy-arn "arn:aws:secretsmanager:us-east-1:882166133385:secret:nebo/stage/db_creds-HI1PzO" --approve --override-existing-serviceaccounts
@@ -14,13 +13,9 @@ https://rtfm.co.ua/aws-kubernetes-integraciya-aws-secrets-manager-ta-parameter-s
 Update config  kubectl
 aws eks --region us-east-1 update-kubeconfig --name nebo-k8s --profile private
 
-
-
-
 Check logs
 
 kubectl logs -n kube-system -f -l app=csi-secret-store-provider-aws
-
 
 ---------------------------------------------------------------------------------
 arn:aws:secretsmanager:eu-central-1:882166133385:secret:db-username-8YEJYl
